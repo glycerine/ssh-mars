@@ -8,7 +8,7 @@ body {
   width: 800px;
 }
 
-#conatiner img {
+#conatiner img, #container a {
   display: block;
   margin: 0;
 }
