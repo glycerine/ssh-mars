@@ -86,7 +86,7 @@ func main() {
 
 	sessionSweeper(db)
 
-	fmt.Println("Server started.")
+	fmt.Printf("Server started on https://%s\n", options.HTTPAdvertise)
 
 	sig := make(chan os.Signal, 1)
 	signal.Notify(sig, os.Interrupt)
