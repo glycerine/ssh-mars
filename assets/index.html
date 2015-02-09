@@ -30,7 +30,7 @@
           <a href="/" class="back sp-link"><img src="images/back.png"/><span>Back</span></a>
           <p>This demo shows how it's possible to sign into websites using SSH.</p>
           <h2>Already have an SSH key?</h2>
-          <p><code>ssh {{ if .SSHPortNonStandard }}-p {{ .SSHPort}} {{ end }}{{ .SSHHost }} <span id="signin-token">{{ .SigninToken }}</code></p>
+          <p><code>ssh{{ if .SSHPortNonStandard }} -p {{ .SSHPort}}{{ end }} <span id="signin-token">{{ .SigninToken }}</span>@{{ .SSHHost }} </code></p>
           <h2>New to SSH?</h2>
           <p><a href="how">Here's how to do it</a></p>
           <div class="footnotes">
@@ -47,7 +47,7 @@
           <p>If you'd rather not reveal your regular fingerprint, make a throwaway instead:</p>
           <p><code>ssh-keygen -f throwaway</code></p>
           <p>Then sign in like this:</p>
-          <p><code>ssh -o "IdentitiesOnly yes" -i throwaway {{ if .SSHPortNonStandard }}-p {{ .SSHPort}} {{ end }}{{ .SSHHost }} {{ .SigninToken }}</code></p>
+          <p><code>ssh -o "IdentitiesOnly yes" -i throwaway{{ if .SSHPortNonStandard }} -p {{ .SSHPort}}{{ end }} {{ .SigninToken }}@{{ .SSHHost }}</code></p>
         </div>
 
         <div id="fingerprint" class="subpage" {{ if .FingerprintPage }}{{ else }}hidden{{ end }}>

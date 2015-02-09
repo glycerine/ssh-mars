@@ -64,17 +64,12 @@ func handleTCPConnection(tcpConn net.Conn, sshConfig *ssh.ServerConfig, hd succe
 		}
 
 		for req := range requests {
-			if req.Type == "exec" {
+			if req.Type == "shell" {
 				req.Reply(true, nil)
 				pubkey := []byte(sshConn.Permissions.Extensions["pubkey"])
+				signinToken := sshConn.Permissions.Extensions["user"]
 
-				if len(req.Payload) < 4 {
-					fmt.Fprintln(os.Stderr, "ssh exec payload too short")
-					break
-				}
-
-				err := hd(pubkey, string(req.Payload[4:]))
-
+				err := hd(pubkey, signinToken)
 				if err != nil {
 					fmt.Fprintln(os.Stderr, err)
 					fmt.Fprintln(channel.Stderr(), "Sorry, there was an error signing you in :(")
@@ -119,7 +114,7 @@ func expandPath(p string) string {
 
 func acceptAnyKey(conn ssh.ConnMetadata, key ssh.PublicKey) (*ssh.Permissions, error) {
 	perm := &ssh.Permissions{
-		Extensions: map[string]string{"pubkey": string(key.Marshal())},
+		Extensions: map[string]string{"pubkey": string(key.Marshal()), "user": conn.User()},
 	}
 	return perm, nil
 }
