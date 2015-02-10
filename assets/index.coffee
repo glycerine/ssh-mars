@@ -28,7 +28,7 @@ Util =
     Util.id('my-fingerprint').getAttribute('value')
 
   signinToken: () ->
-    token = Util.id('signin-token').textContent
+    token = Util.id('signin-token').getAttribute('value')
     if token == ''
       null
     else
@@ -39,7 +39,8 @@ Nav =
     Util.id('signout-link').addEventListener 'click', Nav.signOut
     Util.id('delete-link').addEventListener 'click', Nav.deleteAccount
 
-    window.addEventListener('popstate', Nav.updateVisiblePage)
+    if Util.signinToken()?
+      window.addEventListener('popstate', Nav.updateVisiblePage)
 
     for el in document.getElementsByClassName('sp-link')
       el.addEventListener('click', Nav.navigateSubPage)

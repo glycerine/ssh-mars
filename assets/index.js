@@ -40,7 +40,7 @@
     },
     signinToken: function() {
       var token;
-      token = Util.id('signin-token').textContent;
+      token = Util.id('signin-token').getAttribute('value');
       if (token === '') {
         return null;
       } else {
@@ -54,7 +54,9 @@
       var el, _i, _len, _ref;
       Util.id('signout-link').addEventListener('click', Nav.signOut);
       Util.id('delete-link').addEventListener('click', Nav.deleteAccount);
-      window.addEventListener('popstate', Nav.updateVisiblePage);
+      if (Util.signinToken() != null) {
+        window.addEventListener('popstate', Nav.updateVisiblePage);
+      }
       _ref = document.getElementsByClassName('sp-link');
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         el = _ref[_i];
